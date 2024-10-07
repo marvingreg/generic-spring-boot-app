@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import generic.model.generics.GenericModel;
 import generic.services.generics.GenericService;
@@ -65,8 +66,9 @@ public abstract class GenericController<T extends GenericModel<T>> {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Object> create(T object){
+	public ResponseEntity<Object> create(@RequestBody T object){
 		try {
+			System.out.println(object.toString());
 			return new ResponseEntity<Object>(service.create(object), HttpStatus.OK);
 		}catch(Exception e) {
 			Map<String, String> err = new HashMap<>();
@@ -78,7 +80,7 @@ public abstract class GenericController<T extends GenericModel<T>> {
 	}
 	
 	@PutMapping("")
-	public ResponseEntity<Object> update(T object){
+	public ResponseEntity<Object> update(@RequestBody T object){
 		try {
 			return new ResponseEntity<Object>(service.update(object), HttpStatus.OK);
 		}catch(NullPointerException e) {
@@ -97,8 +99,8 @@ public abstract class GenericController<T extends GenericModel<T>> {
 		}
 	}
 	
-	@DeleteMapping("")
-	public ResponseEntity<Object> delete(Long id){
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> delete(@PathVariable Long id){
 		try {
 			return new ResponseEntity<Object>(service.delete(id), HttpStatus.OK);
 		}catch(NullPointerException e) {
