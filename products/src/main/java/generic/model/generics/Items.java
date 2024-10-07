@@ -1,8 +1,13 @@
 package generic.model.generics;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -10,16 +15,18 @@ import jakarta.persistence.Table;
 public class Items implements GenericModel<Items>{
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_generator")
+	@SequenceGenerator(name = "item_generator", sequenceName = "items_id_seq", allocationSize=1)
 	private Long id;
 	
 	@Column(name = "item_name")
 	private String itemName;
 	
-	@Column(name = "item_description")
+	@Column(name = "item_description") 
 	private String description;
 	
 	@Column(name = "item_price")
-	private String itemPrice;
+	private BigDecimal itemPrice;
 	
 	@Column(name = "item_image")
 	private String itemImage;
@@ -62,11 +69,11 @@ public class Items implements GenericModel<Items>{
 		this.description = description;
 	}
 
-	public String getItemPrice() {
+	public BigDecimal getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(String itemPrice) {
+	public void setItemPrice(BigDecimal itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
@@ -81,6 +88,13 @@ public class Items implements GenericModel<Items>{
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "Items [id=" + id + ", itemName=" + itemName + ", description=" + description + ", itemPrice="
+				+ itemPrice + ", itemImage=" + itemImage + "]";
+	}
+	
 	
 	
 
