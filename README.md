@@ -14,3 +14,7 @@ INSERT INTO items(ITEM_NAME, ITEM_DESCRIPTION, ITEM_PRICE, ITEM_IMAGE)
 VALUES('Playstation 5', 'A console released by SONY', 500, './images/upload');
 
 COMMIT;
+
+## Features
+Spring AOP
+Java Generics
