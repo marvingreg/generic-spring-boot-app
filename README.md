@@ -16,5 +16,5 @@ VALUES('Playstation 5', 'A console released by SONY', 500, './images/upload');
 COMMIT;
 
 ## Features
-Spring AOP
+Spring AOP,
 Java Generics
