@@ -17,4 +17,6 @@ COMMIT;
 
 ## Features
 Spring AOP,
-Java Generics
+Java Generics,
+Spring Data JPA (PostgreSQL)
+
