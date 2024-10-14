@@ -43,17 +43,23 @@ public class ItemAspect {
 		
 		JSONParser parser = new JSONParser(request.toString());  
 		JSONPObject jsonObj = (JSONPObject) parser.parse();
+		
+		Object response = null;
 
 		log.info(String.format("[REQUEST] Method: %s || URL: %s ",request.getMethod(), request.getRequestURL()));
+		try {
+			response = joinPoint.proceed();
 
-		Object response = joinPoint.proceed();
+			String responseBody = objectMapper.writeValueAsString(response);
 
-		String responseBody = objectMapper.writeValueAsString(response);
+			log.info(String.format("[RESPONSE] Status: %s || Response Body: %s",httpResponse.getStatus(), 
+					(response != null ? objectMapper.writeValueAsString(response) : "No Response Body Available")));
 
-		log.info(String.format("[RESPONSE] Status: %s || Response Body: %s",httpResponse.getStatus(), 
-				(response != null ? objectMapper.writeValueAsString(response) : "No Response Body Available")));
-
-		return new ResponseEntity<Object>(new JSONParser(responseBody).parse(), HttpStatusCode.valueOf(httpResponse.getStatus()));
+			return new ResponseEntity<Object>(new JSONParser(responseBody).parse(), HttpStatusCode.valueOf(httpResponse.getStatus()));
+		}catch(Exception e) {
+			return new ResponseEntity<Object>(objectMapper.writeValueAsString(response), HttpStatusCode.valueOf(httpResponse.getStatus()));
+		}
+		
 	}
 
 }
